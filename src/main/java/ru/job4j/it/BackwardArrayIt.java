@@ -24,4 +24,3 @@ public class BackwardArrayIt implements Iterator<Integer> {
         return data[data.length - 1 - point++];
     }
 }
-
