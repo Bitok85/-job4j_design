@@ -54,5 +54,12 @@ public class EvenNumbersIteratorTest {
         assertThat(it.next(), is(6));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(8));
+        assertThat(it.hasNext(), is(false));
+    }
+
+    @Test
+    public void emptyArrayHasNextIsFalse() {
+        it = new EvenNumbersIterator(new int[]{});
+        assertThat(it.hasNext(), is(false));
     }
 }
