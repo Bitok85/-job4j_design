@@ -1,6 +1,5 @@
 package ru.job4j.iterator;
 
-import javax.swing.text.html.HTMLDocument;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,7 +16,7 @@ public class FlatMap<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        while (!cursor.hasNext() && data.hasNext()) {
+        while (data.hasNext() && !cursor.hasNext()) {
             cursor = data.next();
         }
         return cursor.hasNext();
