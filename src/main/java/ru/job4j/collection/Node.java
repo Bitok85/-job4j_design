@@ -1,12 +1,12 @@
 package ru.job4j.collection;
 
-class Node<E> {
-    private Node<E> next;
-    private E data;
+public class Node<E> {
+    Node<E> next;
+    E data;
 
-    public Node(E data) {
+    public Node(E data, Node<E> next) {
         this.data = data;
-        next = null;
+        this.next = next;
     }
 
     public Node<E> getNext() {
