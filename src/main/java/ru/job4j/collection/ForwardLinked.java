@@ -39,7 +39,11 @@ public class ForwardLinked<T> implements Iterable<T> {
         tmpNode.next = null;
         modCount++;
         return tmpNode.value;
-        }
+    }
+
+    public boolean isEmpty() {
+        return head == null;
+    }
 
     @Override
     public Iterator<T> iterator() {

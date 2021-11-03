@@ -1,7 +1,8 @@
 package ru.job4j.collection;
 
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -30,5 +31,15 @@ public class SimpleStackTest {
         stack.push(2);
         stack.pop();
         assertThat(stack.pop(), is(1));
+    }
+
+    @Test
+    public void whenEmptyFewSituations() {
+        SimpleStack<Integer> stack = new SimpleStack<>();
+        assertTrue(stack.isEmpty());
+        stack.push(1);
+        assertFalse(stack.isEmpty());
+        stack.pop();
+        assertTrue(stack.isEmpty());
     }
 }
