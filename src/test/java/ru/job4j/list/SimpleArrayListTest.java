@@ -9,13 +9,16 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 public class SimpleArrayListTest {
 
     List<Integer> list;
 
     @Before
     public void initData() {
-        list = new SimpleArrayList<>(5);
+        list = new SimpleArrayList<>(3);
         list.add(1);
         list.add(2);
         list.add(3);
@@ -34,6 +37,12 @@ public class SimpleArrayListTest {
     @Test (expected = IndexOutOfBoundsException.class)
     public void whenGetByIncorrectIndexThenGetException() {
         list.get(5);
+    }
+
+    @Test
+    public void whenContains() {
+        assertTrue(list.contains(1));
+        assertFalse(list.contains(4));
     }
 
     @Test
@@ -80,7 +89,7 @@ public class SimpleArrayListTest {
     @Test
     public void whenGetIteratorFromEmptyListThenReturnFalse() {
         list = new SimpleArrayList<>(5);
-        Assert.assertFalse(list.iterator().hasNext());
+        assertFalse(list.iterator().hasNext());
     }
 
     @Test (expected = NoSuchElementException.class)
@@ -98,13 +107,13 @@ public class SimpleArrayListTest {
     @Test
     public void whenCheckIterator() {
         Iterator<Integer> iterator = list.iterator();
-        Assert.assertTrue(iterator.hasNext());
+        assertTrue(iterator.hasNext());
         Assert.assertEquals(Integer.valueOf(1), iterator.next());
-        Assert.assertTrue(iterator.hasNext());
+        assertTrue(iterator.hasNext());
         Assert.assertEquals(Integer.valueOf(2), iterator.next());
-        Assert.assertTrue(iterator.hasNext());
+        assertTrue(iterator.hasNext());
         Assert.assertEquals(Integer.valueOf(3), iterator.next());
-        Assert.assertFalse(iterator.hasNext());
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -124,5 +133,10 @@ public class SimpleArrayListTest {
         Iterator<Integer> iterator = list.iterator();
         list.remove(0);
         iterator.next();
+    }
+
+    @Test
+    public void nullCheck() {
+        assertTrue(list.contains(null));
     }
 }

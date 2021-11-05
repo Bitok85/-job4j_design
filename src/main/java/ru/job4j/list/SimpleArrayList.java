@@ -8,6 +8,10 @@ public class SimpleArrayList<T> implements List<T> {
     private int modCount;
     private int point;
 
+    public SimpleArrayList() {
+        this.container = (T[]) new Object[10];
+    }
+
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
     }
@@ -20,6 +24,18 @@ public class SimpleArrayList<T> implements List<T> {
         container[size] = value;
         size++;
         modCount++;
+    }
+
+    @Override
+    public boolean contains(T value) {
+        boolean rsl = false;
+        for (T el : container) {
+            if (Objects.equals(value, el)) {
+                rsl = true;
+                break;
+            }
+        }
+        return rsl;
     }
 
     @Override
