@@ -1,10 +1,9 @@
 package ru.job4j.set;
 
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
+import java.util.*;
+
 import ru.job4j.list.SimpleArrayList;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 public class SimpleSet<T> implements Set<T> {
     private SimpleArrayList<T> set = new SimpleArrayList<>();
@@ -14,7 +13,7 @@ public class SimpleSet<T> implements Set<T> {
     @Override
     public boolean add(T value) {
         boolean rsl = false;
-        if (!set.contains(value)) {
+        if (!contains(value)) {
             set.add(value);
             rsl = true;
             modCount++;
@@ -24,7 +23,14 @@ public class SimpleSet<T> implements Set<T> {
 
     @Override
     public boolean contains(T value) {
-        return set.contains(value);
+        boolean rsl = false;
+        for (T el : set) {
+            if (Objects.equals(value, el)) {
+                rsl = true;
+                break;
+            }
+        }
+        return rsl;
     }
 
     @Override

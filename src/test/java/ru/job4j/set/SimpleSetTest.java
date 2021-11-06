@@ -21,13 +21,9 @@ public class SimpleSetTest {
     @Test
     public void whenAddNull() {
         Set<Integer> set = new SimpleSet<>();
-        /*
         assertTrue(set.add(null));
-        */
         assertTrue(set.contains(null));
-        /*
         assertFalse(set.add(null));
-        */
     }
 
     @Test(expected = ConcurrentModificationException.class)
@@ -66,5 +62,4 @@ public class SimpleSetTest {
         }
         assertTrue(set.contains(20));
     }
-
 }

@@ -18,24 +18,12 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public void add(T value) {
-        if (size == container.length - 1) {
+        if (size == container.length) {
             container = grow(container);
         }
         container[size] = value;
         size++;
         modCount++;
-    }
-
-    @Override
-    public boolean contains(T value) {
-        boolean rsl = false;
-        for (T el : container) {
-            if (Objects.equals(value, el)) {
-                rsl = true;
-                break;
-            }
-        }
-        return rsl;
     }
 
     @Override

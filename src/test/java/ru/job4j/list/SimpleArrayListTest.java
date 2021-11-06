@@ -1,5 +1,6 @@
 package ru.job4j.list;
 
+import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -37,12 +39,6 @@ public class SimpleArrayListTest {
     @Test (expected = IndexOutOfBoundsException.class)
     public void whenGetByIncorrectIndexThenGetException() {
         list.get(5);
-    }
-
-    @Test
-    public void whenContains() {
-        assertTrue(list.contains(1));
-        assertFalse(list.contains(4));
     }
 
     @Test
@@ -133,10 +129,5 @@ public class SimpleArrayListTest {
         Iterator<Integer> iterator = list.iterator();
         list.remove(0);
         iterator.next();
-    }
-
-    @Test
-    public void nullCheck() {
-        assertTrue(list.contains(null));
     }
 }
