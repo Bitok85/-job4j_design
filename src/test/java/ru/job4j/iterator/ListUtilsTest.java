@@ -29,8 +29,8 @@ public class ListUtilsTest {
     @Test
     public void whenAddAfter() {
         List<Integer> input = new ArrayList<>(Arrays.asList(1, 3));
-        ListUtils.addAfter(input, 0, 2);
-        assertThat(input, is(Arrays.asList(1, 2, 3)));
+        ListUtils.addAfter(input, 1, 2);
+        assertThat(input, is(Arrays.asList(1, 3, 2)));
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
