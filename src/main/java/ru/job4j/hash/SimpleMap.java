@@ -13,7 +13,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean put(K key, V value) {
         boolean rsl;
-        if ((float) (size) / (float) capacity >= LOAD_FACTOR) {
+        if (size >= capacity * LOAD_FACTOR) {
             expand();
         }
         if (get(key) != null) {
@@ -62,13 +62,15 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public V get(K key) {
-        return table[indexFor(key)] != null ? table[indexFor(key)].value : null;
+        return table[indexFor(key)] != null
+                && key.equals(table[indexFor(key)].key)
+                ? table[indexFor(key)].value : null;
     }
 
     @Override
     public boolean remove(K key) {
         boolean rsl = false;
-        if (table[indexFor(key)] != null) {
+        if (table[indexFor(key)] != null && key.equals(table[indexFor(key)].key)) {
             table[indexFor(key)] = null;
             size--;
             modCount++;
