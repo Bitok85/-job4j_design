@@ -13,13 +13,15 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean put(K key, V value) {
         boolean rsl;
+        if ((float) (size) / (float) capacity >= LOAD_FACTOR) {
+            expand();
+        }
         if (get(key) != null) {
             rsl = false;
         } else {
             table[indexFor(key)] = new MapEntry<>(key, value);
             size++;
             modCount++;
-            expand();
             rsl = true;
         }
         return rsl;
@@ -29,25 +31,25 @@ public class SimpleMap<K, V> implements Map<K, V> {
      * @param key - ключ значения для которого вычисляется индекс для table
      * @return модуль остатка деления суммы чисел значения хэшкода ключа на длину table
      */
-    public int indexFor(K key) {
+    private int indexFor(K key) {
         int rsl = 0;
         int tmp = key.hashCode();
         while (tmp != 0) {
             rsl += tmp % 10;
             tmp /= 10;
         }
-        return Math.abs(rsl % table.length);
+        return Math.abs(rsl % capacity);
     }
 
     private void expand() {
-        if ((float) size / (float) table.length >= 0.75f) {
             capacity *= 2;
             MapEntry<K, V>[] newTable = new MapEntry[capacity];
-            for (int i = 0; i < table.length; i++) {
-                newTable[i] = table[i];
+        for (int i = 0; i < table.length; i++) {
+            if (table[i] != null) {
+                newTable[indexFor(table[i].key)] = table[i];
             }
-            table = newTable;
         }
+        table = newTable;
     }
 
     public int getLength() {

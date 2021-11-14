@@ -14,25 +14,6 @@ import static org.junit.Assert.*;
 public class SimpleMapTest {
 
     @Test
-    public void whenKeyIsInteger() {
-        SimpleMap<Integer, Integer> sm = new SimpleMap<>();
-        int input1 = 123;
-        int input2 = 0;
-        int input3 = 1234;
-        assertThat(sm.indexFor(input1), is(6));
-        assertThat(sm.indexFor(input2), is(0));
-        assertThat(sm.indexFor(input3), is(2));
-    }
-
-    @Test
-    public void whenHashIsStringAndSameWordsThenSameHash() {
-        SimpleMap<String, Integer> sm = new SimpleMap<>();
-        int hash1 = sm.indexFor("helloWorld");
-        int hash2 = sm.indexFor("helloWorld");
-        assertEquals(hash1, hash2);
-    }
-
-    @Test
     public void whenIntegerPutAndGetValue() {
         SimpleMap<Integer, String> sm = new SimpleMap<>();
         sm.put(1, "abc");
@@ -54,7 +35,7 @@ public class SimpleMapTest {
     public void whenPutAndExpand() {
         SimpleMap<Integer, String> sm = new SimpleMap<>();
         assertThat(sm.getLength(), is(8));
-        IntStream.range(1, 7).forEach(s -> sm.put(s, "abc"));
+        IntStream.range(0, 7).forEach(s -> sm.put(s, "abc"));
         assertThat(sm.getLength(), is(16));
     }
 
