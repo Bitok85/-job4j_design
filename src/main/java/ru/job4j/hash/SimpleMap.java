@@ -16,7 +16,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
         if (size >= capacity * LOAD_FACTOR) {
             expand();
         }
-        if (get(key) != null) {
+        if (table[indexFor(key)] != null) {
             rsl = false;
         } else {
             table[indexFor(key)] = new MapEntry<>(key, value);
