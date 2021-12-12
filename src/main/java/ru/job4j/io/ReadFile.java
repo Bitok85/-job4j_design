@@ -13,7 +13,7 @@ public class ReadFile {
             String[] lines = text.toString().split(System.lineSeparator());
             for (String line : lines) {
                 System.out.println((Integer.parseInt(line) % 2 == 0)
-                        ? line + " " + "is even" : line + " " + "isn't even");
+                        ? "is even" : "isn't even");
             }
         } catch (Exception e) {
             e.printStackTrace();
