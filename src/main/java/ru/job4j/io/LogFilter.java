@@ -20,10 +20,25 @@ public class LogFilter {
         return rsl;
     }
 
+    public static void save(List<String> log, String file) {
+        for (String line : log) {
+            try (PrintWriter out = new PrintWriter(
+                    new BufferedOutputStream(
+                            new FileOutputStream(file, true)
+                    ))) {
+                out.println(line);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
         List<String> log = filter("log.txt");
         for (String line : log) {
             System.out.println(line);
         }
+        save(log, "404.txt");
     }
 }
