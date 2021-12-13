@@ -21,17 +21,16 @@ public class LogFilter {
     }
 
     public static void save(List<String> log, String file) {
-        for (String line : log) {
-            try (PrintWriter out = new PrintWriter(
-                    new BufferedOutputStream(
-                            new FileOutputStream(file, true)
-                    ))) {
+        try (PrintWriter out = new PrintWriter(
+                new BufferedOutputStream(
+                        new FileOutputStream(file, true)
+                ))) {
+            for (String line : log) {
                 out.println(line);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
     }
 
     public static void main(String[] args) {
