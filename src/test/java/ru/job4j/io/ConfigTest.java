@@ -32,4 +32,15 @@ public class ConfigTest {
         assertThat(config.value("Password"), is("SwordFish"));
         assertThat(config.size(), is(2));
     }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void whenLineContainsMoreThenOneEqualSymbol() {
+        String path1 = "./data/pairsWithFewEquals.properties";
+        String path2 = "./data/pairWithFewEquals2.properties";
+        Config config1 = new Config(path1);
+        Config config2 = new Config(path2);
+        config1.load();
+        config2.load();
+
+    }
 }
