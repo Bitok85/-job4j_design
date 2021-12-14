@@ -30,7 +30,7 @@ public class Config {
 
     public String value(String key) {
         if (!key.matches(".*\\w.*")) {
-            throw new IllegalArgumentException("Key contains only symbols or spaces");
+            throw new IllegalArgumentException("Key " + key + " contains only symbols or spaces");
         }
         return values.get(key);
     }
@@ -42,7 +42,7 @@ public class Config {
     private void splitAndPut(String line) {
         String[] pair = line.split("=");
         if (pair.length != 2 || line.startsWith("=") || line.endsWith("=")) {
-            throw new UnsupportedOperationException("String contains more then one '='");
+            throw new UnsupportedOperationException("String " + line + " contains more then one '='");
         }
         values.put(pair[0], pair[1]);
     }

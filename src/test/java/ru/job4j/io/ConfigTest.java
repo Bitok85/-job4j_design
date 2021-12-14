@@ -34,13 +34,17 @@ public class ConfigTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void whenLineContainsMoreThenOneEqualSymbol() {
-        String path1 = "./data/pairsWithFewEquals.properties";
-        String path2 = "./data/pairWithFewEquals2.properties";
-        Config config1 = new Config(path1);
-        Config config2 = new Config(path2);
-        config1.load();
-        config2.load();
+    public void whenLineContainsMoreThenOneEqualSymbolAndEnsWithIt() {
+        String path = "./data/pairsWithFewEquals.properties";
+        Config config = new Config(path);
+        config.load();
 
+    }
+
+    @Test(expected =  UnsupportedOperationException.class)
+    public void whenLineContainsMoreThenOneEqualsSymbol() {
+        String path = "./data/pairWithFewEquals2.properties";
+        Config config = new Config(path);
+        config.load();
     }
 }
