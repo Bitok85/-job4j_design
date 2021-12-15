@@ -13,48 +13,31 @@ public class Analysis {
     final String unavailable2 = "500";
 
     public void unavailable(String source, String target) {
-        List<String[]> log = getUnavailableLog(source);
-        List<String> unavailableLog = createIntervals(log);
+        List<String> rslIntervals = new ArrayList<>();
+        StringBuilder tmpStr = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(new FileReader(source))) {
+            for (String line = in.readLine(); line != null; line = in.readLine()) {
+                String[] tmpLine = line.split(" ");
+                if (tmpStr.isEmpty() && (unavailable1.equals(tmpLine[0]) || unavailable2.equals(tmpLine[0]))) {
+                    tmpStr.append(tmpLine[1]);
+                    tmpStr.append(";");
+                } else if (!tmpStr.isEmpty() && !(unavailable1.equals(tmpLine[0]) || unavailable2.equals(tmpLine[0]))) {
+                    tmpStr.append(tmpLine[1]);
+                    rslIntervals.add(tmpStr.toString());
+                    tmpStr = new StringBuilder();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try (PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
-            for (String line : unavailableLog) {
+            for (String line : rslIntervals) {
                 out.println(line);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
-    private List<String[]> getUnavailableLog(String file) {
-        List<String[]> rsl = new ArrayList<>();
-        try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-            for (String line = in.readLine(); line != null; line = in.readLine()) {
-                String[] tmpLine = line.split(" ");
-                    rsl.add(tmpLine);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return rsl;
-    }
-
-    private List<String> createIntervals(List<String[]> log) {
-        List<String> rsl = new ArrayList<>();
-        StringBuilder tmpStr = new StringBuilder();
-        for (String[] line : log) {
-            if (tmpStr.isEmpty() && (unavailable1.equals(line[0]) || unavailable2.equals(line[0]))) {
-                tmpStr.append(line[1]);
-                tmpStr.append(";");
-            } else if (!tmpStr.isEmpty() && !(unavailable1.equals(line[0]) || unavailable2.equals(line[0]))) {
-                tmpStr.append(line[1]);
-                rsl.add(tmpStr.toString());
-                tmpStr = new StringBuilder();
-            }
-        }
-        return rsl;
-    }
-
-
 
     public static void main(String[] args) {
         try (PrintWriter out = new PrintWriter(new FileOutputStream("./data/unavailable.csv"))) {
