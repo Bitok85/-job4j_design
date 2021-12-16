@@ -22,11 +22,12 @@ public class AnalysisTest {
         File source = tmpFolder.newFile("source.txt");
         File target = tmpFolder.newFile("target.csv");
         try (PrintWriter out = new PrintWriter(source)) {
-            try (BufferedReader data = new BufferedReader(new FileReader("./data/log1.txt"))) {
-                for (String line = data.readLine(); line != null; line = data.readLine()) {
-                    out.println(line);
-                }
-            }
+            out.println("200 10:56:01");
+            out.println("500 10:57:01");
+            out.println("400 10:58:01");
+            out.println("200 10:59:01");
+            out.println("500 11:01:02");
+            out.println("200 11:02:02");
         }
         analysis.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
         List<String> rsl = new ArrayList<>();
@@ -37,4 +38,25 @@ public class AnalysisTest {
         assertThat(rsl.get(1).toString(), is("11:01:02;11:02:02"));
     }
 
+    @Test
+    public void unavailableWhenOneInterval() throws IOException {
+        Analysis analysis = new Analysis();
+        File source = tmpFolder.newFile("source.txt");
+        File target = tmpFolder.newFile("target.txt");
+        try (PrintWriter out = new PrintWriter(source)) {
+            out.println("200 10:56:01");
+            out.println("500 10:57:01");
+            out.println("400 10:58:01");
+            out.println("500 10:59:01");
+            out.println("400 11:01:02");
+            out.println("200 11:02:02");
+        }
+        analysis.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
+        List<String> rsl = new ArrayList<>();
+        try (BufferedReader in = new BufferedReader(new FileReader(target))) {
+            in.lines().forEach(rsl::add);
+        }
+        assertThat(rsl.get(0), is("10:57:01;11:02:02"));
+        assertThat(rsl.size(), is(1));
+    }
 }
