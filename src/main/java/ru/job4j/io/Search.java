@@ -17,6 +17,9 @@ public class Search {
                     "Root folder or file extension is null. Usage java -jar dir.jar ROOT_FOLDER.");
         }
         Path start = Paths.get(args[0]);
+        if (!Search.checkPath(start)) {
+            throw new IllegalArgumentException("Path doesn't exist or it's not a directory");
+        }
         search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
 
@@ -24,5 +27,9 @@ public class Search {
         SearchFiles searcher = new SearchFiles(condition);
         Files.walkFileTree(root, searcher);
         return searcher.getPaths();
+    }
+
+    private static boolean checkPath(Path start) {
+        return Files.exists(start) && Files.isDirectory(start);
     }
 }
