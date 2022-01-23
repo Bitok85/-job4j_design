@@ -1,21 +1,37 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
 
-    private final static int PARAMSQUANTITY = 3;
+    private static String sourceDir;
+    private static String exclude;
+    private static String targetDir;
 
-    public static void packFiles(List<File> sources, File target) {
-        if (!target.isDirectory()) {
-            throw new IllegalArgumentException("Target directory doesn't exist");
-        }
+    private static Map<File, String> fileZipPath = new HashMap<>();
+    private static List<File> listOfExceptions = new ArrayList<>();
+
+
+    public static void main(String[] args) throws IOException {
+        ArgsName argsName = ArgsName.of(args);
+        sourceDir = argsName.get("d");
+        exclude = argsName.get("e");
+        targetDir = argsName.get("o");
+        validation(args);
+        searchExceptions();
+        fileMapGen(new File(sourceDir));
+        packZip();
+    }
+
+    private static void searchExceptions() throws IOException {
+        Path start = Paths.get(sourceDir);
+        Search.search(start, p -> p.toFile().getName().endsWith(exclude))
+                .forEach(p -> listOfExceptions.add(p.toFile()));
     }
 
     public static void packSingleFile(File source, File target) {
@@ -29,30 +45,44 @@ public class Zip {
         }
     }
 
-    private static List<File> listOf(File folder) {
-        List<File> rslList = new ArrayList<>();
-        File[] fileArray = folder.listFiles();
-        rslList.addAll(Arrays.asList(fileArray));
-        for (File file : fileArray) {
-            if (file.isDirectory()) {
-                rslList.addAll(listOf(file));
-            }
+    public static void packZip() {
+        for (Map.Entry<File, String> entry : fileZipPath.entrySet()) {
+            packSingleFile(entry.getKey(), new File(entry.getValue()));
         }
-        return rslList;
     }
 
-    public static void main(String[] args) {
-        if (args.length != PARAMSQUANTITY) {
-            throw new IllegalArgumentException("Missing some of income parameters");
+    private static void fileMapGen(File file) {
+        if (file.isFile() && !listOfExceptions.contains(file)) {
+            fileZipPath.put(file, zipPath(file.getAbsolutePath()) + ".zip");
+        } else if (file.isDirectory() && !file.getName().equals(new File(targetDir).getName())) {
+            File zipEntryDir = new File(zipPath(file.getAbsolutePath()));
+            if (!zipEntryDir.mkdir()) {
+                System.out.println("Cannot create directory " + zipEntryDir.toString());
+            }
+            File[] subDir = file.listFiles();
+            if (subDir != null) {
+                Arrays.stream(subDir)
+                        .forEach(Zip::fileMapGen);
+            }
         }
-        ArgsName argsName = ArgsName.of(args);
-        File sourceDir = new File(argsName.get("d"));
-        if (!sourceDir.isDirectory() && sourceDir.length() == 0) {
-            throw new IllegalArgumentException("Invalid source directory");
+    }
+
+    private static String zipPath(String file) {
+        String sourceTail = new File(sourceDir).getName();
+        return new File(file).getName().equals(sourceTail)
+                ? targetDir + File.separator + sourceTail
+                : targetDir + File.separator + file.substring(sourceDir.length() + 1, file.length());
+    }
+
+    private static void validation(String[] params) {
+        if (params.length != 3) {
+            throw new IllegalArgumentException("Input all parameters");
         }
-        packSingleFile(
-                new File("./pom.xml"),
-                new File("./pom.zip")
-        );
+        if (!new File(sourceDir).exists()) {
+            throw new IllegalArgumentException("Source directory doesn't exist");
+        }
+        if (!new File(targetDir).exists()) {
+            throw new IllegalArgumentException("Target directory doesn't exist");
+        }
     }
 }
