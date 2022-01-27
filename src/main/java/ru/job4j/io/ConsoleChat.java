@@ -31,12 +31,12 @@ public class ConsoleChat {
         while (sc.hasNext()) {
             String in = sc.next();
             log.add(in);
-            if (in.equals(OUT)) {
+            if (OUT.equals(in)) {
                 sc.close();
                 break;
-            } else if (in.equals(STOP)) {
+            } else if (STOP.equals(in)) {
                 switcher = false;
-            } else if (in.equals(CONTINUE)) {
+            } else if (CONTINUE.equals(in)) {
                 String phrase = randomPhrase(botList);
                 log.add(phrase);
                 System.out.println(phrase);
@@ -71,7 +71,7 @@ public class ConsoleChat {
     }
 
     public static void main(String[] args) {
-        ConsoleChat cc = new ConsoleChat("C:\\projects\\botLog.txt", "C:\\projects\\botAnswers.txt");
+        ConsoleChat cc = new ConsoleChat("./botLog.txt", "./botAnswers.txt");
         cc.readPhrases(cc.botAnswers);
         cc.run();
         cc.saveLog(log);
