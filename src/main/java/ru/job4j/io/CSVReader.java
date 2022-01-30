@@ -2,7 +2,6 @@ package ru.job4j.io;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
@@ -34,7 +33,7 @@ public class CSVReader {
     }
 
     public static void action(String out) throws IOException {
-        if (out.equals(PRINT)) {
+        if (PRINT.equals(out)) {
             outList.forEach(System.out::println);
         } else {
             Files.write(Paths.get(out), outList, StandardOpenOption.CREATE);
@@ -62,7 +61,7 @@ public class CSVReader {
         if (!Files.exists(Paths.get(paramsName.get("path")))) {
             throw new IllegalArgumentException("File doesn't exist");
         }
-        if (!paramsName.get("out").equals("stdout")
+        if (!PRINT.equals(paramsName.get("out"))
                 && !Files.exists(Paths.get(paramsName.get("out")).getParent())) {
             throw new IllegalArgumentException("Incorrect output parameter. Input " + PRINT + " "
                     + " for console input or correct file path");
