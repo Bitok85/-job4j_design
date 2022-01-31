@@ -6,11 +6,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EchoServer {
 
     private static final String STOP = "Exit";
     private static final int PORT = 9000;
+    private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
 
     public static void main(String[] args) throws IOException {
         try (ServerSocket server = new ServerSocket(PORT)) {
@@ -37,7 +40,7 @@ public class EchoServer {
                     }
                     out.flush();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LOG.error("Exception", e);
                 }
             }
         }
