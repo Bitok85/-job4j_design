@@ -9,10 +9,15 @@ public class UsageLog4j {
 
     public static void main(String[] args) {
         BasicConfigurator.configure();
-        LOG.trace("trace message");
-        LOG.debug("debug message");
-        LOG.info("Info message");
-        LOG.warn("warn message");
-        LOG.error("error message");
+        int age = 10;
+        byte paws = 4;
+        short friends = 3;
+        long hair = 123243546436L;
+        float milk = 3.4F;
+        double money = 100.21324D;
+        char firstLetter = 'K';
+        boolean animal = true;
+        LOG.debug("User info age : {}, paws {}, friends {}. hair {}, milk {}, money {}, firstLetter {}, animal {}",
+                age, paws, friends, hair, milk, money, firstLetter, animal);
     }
 }
