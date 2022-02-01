@@ -1,4 +1,4 @@
-package ru.job4j.serialization.json;
+package ru.job4j.serialization;
 
 import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
