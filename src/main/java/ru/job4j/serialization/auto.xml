@@ -1,0 +1,9 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<auto newOld="false" yearOfManufacture="2015">
+    <engine type="Gasoline" capacity="3.6"/>
+    <crashtests>
+        <crashtest>A+</crashtest>
+        <crashtest>B</crashtest>
+        <crashtest>A-</crashtest>
+    </crashtests>
+</auto>
