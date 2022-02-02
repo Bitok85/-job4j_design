@@ -27,6 +27,22 @@ public class Auto {
         this.crashTests = crashTests;
     }
 
+    public boolean isNew() {
+        return newOld;
+    }
+
+    public int getYearOfManufacture() {
+        return yearOfManufacture;
+    }
+
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public String[] getCrashTests() {
+        return crashTests;
+    }
+
     @Override
     public String toString() {
         return "Auto{"

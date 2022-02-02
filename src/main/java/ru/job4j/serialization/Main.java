@@ -1,5 +1,7 @@
 package ru.job4j.serialization;
 
+import org.json.JSONObject;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -28,6 +30,15 @@ public class Main {
             Auto result = (Auto) unmarshaller.unmarshal(reader);
             System.out.println(result);
         }
+        System.out.println();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("new/old", auto.isNew());
+        jsonObject.put("year of manufacture", auto.getYearOfManufacture());
+        jsonObject.put("engine", auto.getEngine());
+        jsonObject.put("crash tests", auto.getCrashTests());
+        System.out.println(jsonObject);
+        System.out.println(new JSONObject(auto).toString());
+
     }
 
 }

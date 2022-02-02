@@ -21,6 +21,14 @@ public class Engine {
         this.capacity = capacity;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public float getCapacity() {
+        return capacity;
+    }
+
     @Override
     public String toString() {
         return "Engine{"
