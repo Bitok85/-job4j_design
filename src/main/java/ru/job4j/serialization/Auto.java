@@ -27,7 +27,7 @@ public class Auto {
         this.crashTests = crashTests;
     }
 
-    public boolean isNew() {
+    public boolean isNewOld() {
         return newOld;
     }
 

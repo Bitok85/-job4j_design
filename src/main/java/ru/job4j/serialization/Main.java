@@ -32,12 +32,12 @@ public class Main {
         }
         System.out.println();
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("new/old", auto.isNew());
+        jsonObject.put("new/old", auto.isNewOld());
         jsonObject.put("year of manufacture", auto.getYearOfManufacture());
         jsonObject.put("engine", auto.getEngine());
         jsonObject.put("crash tests", auto.getCrashTests());
         System.out.println(jsonObject);
-        System.out.println(new JSONObject(auto).toString());
+        System.out.println(new JSONObject(auto));
 
     }
 
