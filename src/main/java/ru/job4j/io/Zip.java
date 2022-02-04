@@ -1,5 +1,8 @@
 package ru.job4j.io;
 
+import ru.job4j.io.search.ArgsName;
+import ru.job4j.io.search.Search;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;

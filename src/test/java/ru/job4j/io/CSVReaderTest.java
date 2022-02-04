@@ -4,11 +4,10 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import ru.job4j.io.search.ArgsName;
 
 import java.io.File;
 import java.nio.file.Files;
-
-import static org.junit.Assert.*;
 
 public class CSVReaderTest {
 
