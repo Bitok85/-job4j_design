@@ -77,7 +77,8 @@ public class MainSearch {
     private static void logWrite(String out) throws IOException {
         searchRsl.forEach(p -> {
             try {
-                Files.write(Paths.get(out), (p.toString() + "\n").getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                Files.write(Paths.get(out), (p.toString() + System.lineSeparator()).getBytes(),
+                        StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             } catch (IOException e) {
                 LOG.error("Exception", e);
             }
