@@ -13,9 +13,9 @@ select *
 from product
 where expired_date < current_date
 
-select name, price
+select *
 from product
-order by price desc limit 1
+where price = (select max(price) from product)
 
 select t2.name, count(*)
 from product as t1 inner join pType as t2 on t1.type_id = t2.id
