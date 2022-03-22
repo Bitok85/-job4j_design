@@ -27,14 +27,14 @@ public class ImportDB {
         return user;
     }
 
-    public List<User> load() throws IOException {
+    public List<User> load() {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(line -> users.add(parseSrc(line)));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return new ArrayList<>();
+        return users;
     }
 
     public void save(List<User> users) throws ClassNotFoundException, SQLException {
