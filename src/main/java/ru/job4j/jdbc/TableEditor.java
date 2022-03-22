@@ -3,15 +3,14 @@ package ru.job4j.jdbc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 import java.util.StringJoiner;
 
 public class TableEditor implements AutoCloseable {
     private Connection connection;
-    private static Properties properties;
+    private Properties properties;
     private static final Logger LOG = LoggerFactory.getLogger(TableEditor.class.getName());
 
     public TableEditor(Properties properties) throws SQLException, ClassNotFoundException {
@@ -20,9 +19,9 @@ public class TableEditor implements AutoCloseable {
     }
 
     public static void main(String[] args) throws Exception {
-        try {
-            properties = new Properties();
-            properties.load(new FileReader("./data/PSQL_login.properties"));
+        Properties properties = new Properties();
+        try (InputStream resource = TableEditor.class.getClassLoader().getResourceAsStream("./PSQL_login.properties")) {
+            properties.load(resource);
         } catch (Exception e) {
             LOG.error("Exception", e);
         }
