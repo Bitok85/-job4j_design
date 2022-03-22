@@ -18,8 +18,11 @@ public class ImportDB {
         this.dump = dump;
     }
 
-    private User parseSrc(String line) {
+    private User parseSrc(String line) throws IllegalArgumentException {
         String[] lineArr = line.split(";");
+        if (lineArr.length != 2 || lineArr[0].isEmpty() || lineArr[1].isEmpty()) {
+            throw new IllegalArgumentException("Incorrect input data");
+        }
         User user = new User(lineArr[0], lineArr[1]);
         return user;
     }
@@ -28,7 +31,7 @@ public class ImportDB {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(line -> users.add(parseSrc(line)));
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             return new ArrayList<>();
