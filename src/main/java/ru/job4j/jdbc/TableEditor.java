@@ -20,7 +20,7 @@ public class TableEditor implements AutoCloseable {
 
     public static void main(String[] args) throws Exception {
         Properties properties = new Properties();
-        try (InputStream resource = TableEditor.class.getClassLoader().getResourceAsStream("./PSQL_login.properties")) {
+        try (InputStream resource = TableEditor.class.getClassLoader().getResourceAsStream("PSQL_login.properties")) {
             properties.load(resource);
         } catch (Exception e) {
             LOG.error("Exception", e);
