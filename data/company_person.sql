@@ -9,8 +9,8 @@ group by t2.name
 having count(*) = (
 	select max(empl_count) 
 	from (
-			select t2.name, count(*) as empl_count
-			from person as t1 inner join company as t2 on t1.company_id = t2.id
-			group by t2.name
+			select company_id, count(*) as empl_count
+			from person
+			group by company_id
 		) as t3
 	);
