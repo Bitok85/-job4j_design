@@ -1,4 +1,5 @@
 
+
 select t1.name, t2.name 
 from person as t1 inner join company as t2 on t1.company_id = t2.id
 where t2.id != 5;
@@ -14,3 +15,4 @@ having count(*) = (
 			group by company_id
 		) as t3
 	);
+
