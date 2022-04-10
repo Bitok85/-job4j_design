@@ -11,7 +11,7 @@ import java.util.List;
 public class PrepareStatementDemo {
     private Connection connection;
 
-    public PrepareStatementDemo(Connection connection) throws  Exception {
+    public PrepareStatementDemo(Connection connection) throws Exception {
         this.connection = connection;
     }
 
