@@ -9,5 +9,5 @@ public class Emulator {
         dirFileCache.load("text.txt");
         System.out.println(dirFileCache.get("text.txt"));
     }
-
 }
+
