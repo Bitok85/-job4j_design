@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class DirFileCache extends AbstractCache<String, String> {
 
@@ -18,10 +17,13 @@ public class DirFileCache extends AbstractCache<String, String> {
     }
 
     @Override
-    protected String load(String key) throws IOException {
-        Path path = Paths.get(String.join("/", cachingDir, key));
-        String value = Files.readString(path);
-        put(key, value);
+    protected String load(String key) {
+        String value = null;
+        try {
+            value = Files.readString(Path.of(cachingDir, key));
+        } catch (IOException e) {
+            LOG.error("IOException", e);
+        }
         return value;
     }
 }
