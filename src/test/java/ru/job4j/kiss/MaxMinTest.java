@@ -18,7 +18,7 @@ public class MaxMinTest {
         List<Integer> list1 = List.of(5, 4, 5, 7, 2);
         List<String> list2 = List.of("ab", "dc", "aa", "yz");
         assertThat(maxMin.max(list1, comp1), is(7));
-        assertThat(maxMin.max(list2, comp2),is("yz"));
+        assertThat(maxMin.max(list2, comp2), is("yz"));
     }
 
     @Test
@@ -29,7 +29,7 @@ public class MaxMinTest {
         List<Integer> list1 = List.of(5, 4, 5, 7, 2);
         List<String> list2 = List.of("ab", "dc", "aa", "yz");
         assertThat(maxMin.min(list1, comp1), is(2));
-        assertThat(maxMin.min(list2, comp2),is("aa"));
+        assertThat(maxMin.min(list2, comp2), is("aa"));
     }
 
     @Test(expected = IllegalArgumentException.class)
