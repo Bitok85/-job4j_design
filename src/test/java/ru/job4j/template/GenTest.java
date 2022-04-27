@@ -22,6 +22,7 @@ public class GenTest {
         assertThat(gen.produce(template, args), is("I am Alex, Who are you? "));
     }
 
+    @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void whenInstanceNotExistInMap() {
         Gen gen = new Gen();
@@ -31,6 +32,7 @@ public class GenTest {
         gen.produce(template, args);
     }
 
+    @Ignore
     @Test(expected = NullPointerException.class)
     public void whenValueIsNull() {
         Gen gen = new Gen();
