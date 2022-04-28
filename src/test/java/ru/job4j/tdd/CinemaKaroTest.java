@@ -59,7 +59,7 @@ public class CinemaKaroTest {
         Cinema cinema = new CinemaKaro();
         Calendar date = Calendar.getInstance();
         date.set(2000, 10, 10, 23, 00);
-        Ticket ticket = cinema.buy(account, 50, 1, date);
+        Ticket ticket = cinema.buy(account, 5, 1, date);
     }
 
     @Ignore
@@ -69,7 +69,7 @@ public class CinemaKaroTest {
         Cinema cinema = new CinemaKaro();
         Calendar date = Calendar.getInstance();
         date.set(2000, 10, 10, 23, 00);
-        Ticket ticket1 = cinema.buy(account, 50, 1, date);
-        Ticket ticket2 = cinema.buy(account, 50, 1, date);
+        Ticket ticket1 = cinema.buy(account, 5, 1, date);
+        Ticket ticket2 = cinema.buy(account, 5, 1, date);
     }
 }
