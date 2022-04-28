@@ -28,7 +28,7 @@ public class GenTest {
         Gen gen = new Gen();
         String template = "I am ${name}, Who are ${subject}? ";
         Map<String, String> args = new HashMap<>();
-        args.put("${name}", "Alex");
+        args.put("name", "Alex");
         gen.produce(template, args);
     }
 
@@ -38,8 +38,8 @@ public class GenTest {
         Gen gen = new Gen();
         String template = "I am ${name}, Who are ${subject}? ";
         Map<String, String> args = new HashMap<>();
-        args.put("${name}", "Alex");
-        args.put("${subject}", null);
+        args.put("name", "Alex");
+        args.put("subject", null);
         gen.produce(template, args);
     }
 }
