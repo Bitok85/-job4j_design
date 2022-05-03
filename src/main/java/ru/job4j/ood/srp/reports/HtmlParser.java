@@ -1,10 +1,12 @@
 package ru.job4j.ood.srp.reports;
 
-import javax.swing.text.DateFormatter;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.StringJoiner;
 
 public class HtmlParser implements Parser {
+
+    SimpleDateFormat dateOnly = new SimpleDateFormat("MM/dd/yyyy");
 
     @Override
     public String parse(List<Employee> employees) {
@@ -29,8 +31,8 @@ public class HtmlParser implements Parser {
         for (Employee emp : employees) {
             html.add("<tr>");
             html.add(String.format("<td>%s</td>", emp.getName()));
-            html.add(String.format("<td>%s</td>", emp.getHired()));
-            html.add(String.format("<td>%s</td>", emp.getFired()));
+            html.add(String.format("<td>%s</td>", dateOnly.format(emp.getHired().getTime())));
+            html.add(String.format("<td>%s</td>", dateOnly.format(emp.getFired().getTime())));
             html.add(String.format("<td>%s</td>", emp.getSalary()));
             html.add("</tr>");
         }
