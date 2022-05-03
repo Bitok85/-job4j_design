@@ -5,9 +5,9 @@ import java.util.function.Predicate;
 
 public class HrReportEngine implements Report {
 
-    private HrStore store;
+    private MemStore store;
 
-    public HrReportEngine(HrStore store) {
+    public HrReportEngine(MemStore store) {
         this.store = store;
     }
 

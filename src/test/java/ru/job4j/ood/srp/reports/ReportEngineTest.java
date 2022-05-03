@@ -47,7 +47,7 @@ public class ReportEngineTest {
 
     @Test
     public void whenHrDeptGenerated() {
-        HrStore store = new HrStore();
+        MemStore store = new MemStore();
         Employee worker1 = new Employee("Ivan", 255.55);
         Employee worker2 = new Employee("Ivan", 255.55);
         Employee worker3 = new Employee("Alexey", 320);

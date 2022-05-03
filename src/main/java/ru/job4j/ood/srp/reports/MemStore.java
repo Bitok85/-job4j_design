@@ -13,6 +13,10 @@ public class MemStore implements Store {
         employees.add(employee);
     }
 
+    public void descSortBySalary() {
+        employees.sort((Employee em1, Employee em2) -> Double.compare(em2.getSalary(), em1.getSalary()));
+    }
+
     @Override
     public List<Employee> findBy(Predicate<Employee> filter) {
         return employees.stream()
