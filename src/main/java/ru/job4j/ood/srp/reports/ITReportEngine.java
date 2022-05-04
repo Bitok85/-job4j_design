@@ -1,13 +1,12 @@
 package ru.job4j.ood.srp.reports;
 
-import java.util.Calendar;
 import java.util.function.Predicate;
 
 public class ITReportEngine implements Report {
 
-    private MemStore store;
+    private Store store;
 
-    public ITReportEngine(MemStore store) {
+    public ITReportEngine(Store store) {
         this.store = store;
     }
 
@@ -17,15 +16,6 @@ public class ITReportEngine implements Report {
         return parser.parse(store.findBy(filter));
     }
 
-    public static void main(String[] args) {
-        Calendar now = Calendar.getInstance();
-        MemStore store = new MemStore();
-        store.add(new Employee("Ivan", now, now, 100));
-        store.add(new Employee("Petr", now, now, 10.1));
-        store.add(new Employee("Kate", now, now, 355.2));
-        ITReportEngine reportEngine = new ITReportEngine(store);
-        System.out.println(reportEngine.generate(em -> true));
-    }
 }
 
 
