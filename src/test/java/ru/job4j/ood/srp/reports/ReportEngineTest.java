@@ -15,7 +15,7 @@ public class ReportEngineTest {
 
     @Test
     public void whenOldGenerated() {
-        MemStore store = new MemStore();
+        Store store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Alex", now, now, 100);
         store.add(worker);
@@ -33,7 +33,7 @@ public class ReportEngineTest {
 
     @Test
     public void whenCountingOldRoomGenerated() {
-        MemStore store = new MemStore();
+        Store store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Alex", now, now, "100");
         store.add(worker);
@@ -51,7 +51,7 @@ public class ReportEngineTest {
 
     @Test
     public void whenHrDeptGenerated() {
-        MemStore store = new MemStore();
+        Store store = new MemStore();
         Employee worker1 = new Employee("Ivan", 255.55);
         Employee worker2 = new Employee("Ivan", 255.55);
         Employee worker3 = new Employee("Alexey", 320);
@@ -79,7 +79,7 @@ public class ReportEngineTest {
     public void whenItHtmlReport() {
         Calendar now = Calendar.getInstance();
         SimpleDateFormat dateOnly = new SimpleDateFormat("MM/dd/yyyy");
-        MemStore store = new MemStore();
+        Store store = new MemStore();
         List<Employee> employees = new ArrayList<>();
         Employee employee1 = new Employee("Ivan", now, now, 150);
         Employee employee2 = new Employee("Kate", now, now, 300);
