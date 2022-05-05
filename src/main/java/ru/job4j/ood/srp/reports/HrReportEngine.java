@@ -1,6 +1,5 @@
 package ru.job4j.ood.srp.reports;
 
-import java.util.List;
 import java.util.function.Predicate;
 
 public class HrReportEngine implements Report {

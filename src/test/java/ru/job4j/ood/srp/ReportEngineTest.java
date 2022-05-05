@@ -1,6 +1,7 @@
-package ru.job4j.ood.srp.reports;
+package ru.job4j.ood.srp;
 
 import org.junit.Test;
+import ru.job4j.ood.srp.reports.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
