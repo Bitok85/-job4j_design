@@ -3,11 +3,9 @@ package ru.job4j.ood.srp;
 import org.junit.Test;
 import ru.job4j.ood.srp.reports.*;
 
+import javax.xml.bind.JAXBException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.StringJoiner;
+import java.util.*;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -20,7 +18,7 @@ public class ReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Alex", now, now, 100);
         store.add(worker);
-        ReportEngine reportEngine = new ReportEngine(store);
+        Report reportEngine = new ReportEngine(store);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Hired; Fired; Salary;")
                 .append(System.lineSeparator())
@@ -38,7 +36,7 @@ public class ReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Alex", now, now, "100");
         store.add(worker);
-        ReportCountingRoom reportEngine = new ReportCountingRoom(store);
+        Report reportEngine = new ReportCountingRoom(store);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Hired; Fired; Salary;")
                 .append(System.lineSeparator())
@@ -59,7 +57,7 @@ public class ReportEngineTest {
         store.add(worker1);
         store.add(worker2);
         store.add(worker3);
-        HrReportEngine reportEngine = new HrReportEngine(store);
+        Report reportEngine = new HrReportEngine(store);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Salary;")
                 .append(System.lineSeparator())
@@ -88,7 +86,7 @@ public class ReportEngineTest {
         store.add(employee2);
         employees.add(employee1);
         employees.add(employee2);
-        ITReportEngine reportEngine = new ITReportEngine(store);
+        Report reportEngine = new ITReportEngine(store);
 
         StringJoiner html = new StringJoiner(System.lineSeparator());
 
@@ -121,6 +119,41 @@ public class ReportEngineTest {
         html.add("</body>");
         html.add("</html>");
         assertThat(reportEngine.generate(em -> true), is(html.toString()));
+
+    }
+
+    @Test
+    public void whenXmlReport() throws JAXBException {
+        Calendar date = new GregorianCalendar(2022, 05, 06);
+        Store store = new MemStore();
+        Employee employee = new Employee("Ivan", date, date, 150);
+        store.add(employee);
+        Report report = new XmlReport(store);
+        String expectedDate = "2022-06-06T00:00:00+03:00";
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
+                + "<Employees>\n"
+                + "    <employees>\n"
+                + "        <fired>" + expectedDate + "</fired>\n"
+                + "        <hired>" + expectedDate + "</hired>\n"
+                + "        <name>Ivan</name>\n"
+                + "        <salary>150.0</salary>\n"
+                + "    </employees>\n"
+                + "</Employees>\n";
+        assertThat(report.generate(em -> true), is(expected));
+    }
+
+    @Test
+    public void whenGsonReport() {
+        Calendar date = new GregorianCalendar(2022, 05, 06);
+        Store store = new MemStore();
+        Employee employee = new Employee("Ivan", date, date, 140);
+        store.add(employee);
+        Report report = new JSONReport(store);
+        String expected = "[{\"name\":\"Ivan\","
+                + "\"hired\":{\"year\":2022,\"month\":5,\"dayOfMonth\":6,\"hourOfDay\":0,\"minute\":0,\"second\":0},"
+                + "\"fired\":{\"year\":2022,\"month\":5,\"dayOfMonth\":6,\"hourOfDay\":0,\"minute\":0,\"second\":0},"
+                + "\"salary\":140.0}]";
+        assertThat(report.generate(em -> true), is(expected));
 
     }
 
