@@ -42,3 +42,4 @@ public class XmlReport implements Report {
     }
 
 }
+

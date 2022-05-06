@@ -23,14 +23,4 @@ public class JSONReport implements Report {
         Gson gson = new GsonBuilder().create();
         return gson.toJson(employees);
     }
-
-    public static void main(String[] args) throws JAXBException {
-        Store store1 = new MemStore();
-        Calendar date = new GregorianCalendar(2022, 05, 06);
-        Employee employee = new Employee("Ivan", date, date, 140);
-        store1.add(employee);
-        Report report = new JSONReport(store1);
-        System.out.println(report.generate(em -> true));
-
-    }
 }
