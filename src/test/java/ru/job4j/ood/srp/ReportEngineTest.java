@@ -107,55 +107,73 @@ public class ReportEngineTest {
         html.add("<th>Salary</th>");
         html.add("</tr>");
 
-        for (Employee emp : employees) {
-            html.add("<tr>");
-            html.add(String.format("<td>%s</td>", emp.getName()));
-            html.add(String.format("<td>%s</td>", dateOnly.format(emp.getHired().getTime())));
-            html.add(String.format("<td>%s</td>", dateOnly.format(emp.getFired().getTime())));
-            html.add(String.format("<td>%s</td>", emp.getSalary()));
-            html.add("</tr>");
-        }
+        html.add("<tr>");
+        html.add(String.format("<td>%s</td>", employee1.getName()));
+        html.add(String.format("<td>%s</td>", dateOnly.format(employee1.getHired().getTime())));
+        html.add(String.format("<td>%s</td>", dateOnly.format(employee1.getFired().getTime())));
+        html.add(String.format("<td>%s</td>", employee1.getSalary()));
+        html.add("</tr>");
+
+        html.add("<tr>");
+        html.add(String.format("<td>%s</td>", employee2.getName()));
+        html.add(String.format("<td>%s</td>", dateOnly.format(employee2.getHired().getTime())));
+        html.add(String.format("<td>%s</td>", dateOnly.format(employee2.getFired().getTime())));
+        html.add(String.format("<td>%s</td>", employee2.getSalary()));
+        html.add("</tr>");
 
         html.add("</table>");
         html.add("</body>");
         html.add("</html>");
         assertThat(reportEngine.generate(em -> true), is(html.toString()));
-
     }
 
-    @Ignore
     @Test
     public void whenXmlReport() throws JAXBException {
-        Calendar date = new GregorianCalendar(2022, 05, 06);
+        Calendar date = Calendar.getInstance();
+        date.set(2022, Calendar.MAY, 8);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String dateStr = formatter.format(date.getTime());
         Store store = new MemStore();
-        Employee employee = new Employee("Ivan", date, date, 150);
-        store.add(employee);
+        Employee emp1 = new Employee("Ivan", date, date, 150);
+        Employee emp2 = new Employee("Kate", date, date, 140);
+        store.add(emp1);
+        store.add(emp2);
         Report report = new XmlReport(store);
-        String expectedDate = "2022-06-06T00:00:00+03:00";
-        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
-                + "<Employees>\n"
-                + "    <employees>\n"
-                + "        <fired>" + expectedDate + "</fired>\n"
-                + "        <hired>" + expectedDate + "</hired>\n"
-                + "        <name>Ivan</name>\n"
-                + "        <salary>150.0</salary>\n"
-                + "    </employees>\n"
-                + "</Employees>\n";
-        assertThat(report.generate(em -> true), is(expected));
+        String empXmlTemplate = "<employee name=\"%s\" hired=\"%s\" fired=\"%s\" salary=\"%.1f\"/>";
+        StringBuilder expected = new StringBuilder()
+                .append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>")
+                .append("<Employees>")
+                .append(String.format(Locale.US, empXmlTemplate,
+                        emp1.getName(), dateStr, dateStr, emp1.getSalary()))
+                .append(String.format(Locale.US, empXmlTemplate,
+                        emp2.getName(), dateStr, dateStr, emp2.getSalary()))
+                .append("</Employees>");
+        String rsl = report.generate(em -> true).replaceAll("\\n\\s*", "");
+        assertThat(rsl, is(expected.toString()));
     }
 
     @Test
     public void whenGsonReport() {
-        Calendar date = new GregorianCalendar(2022, 05, 06);
+        Calendar date = Calendar.getInstance();
+        date.set(2022, Calendar.MAY, 8);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String dateStr = formatter.format(date.getTime());
         Store store = new MemStore();
-        Employee employee = new Employee("Ivan", date, date, 140);
-        store.add(employee);
+        Employee emp1 = new Employee("Ivan", date, date, 140);
+        Employee emp2 = new Employee("Kate", date, date, 140);
+        store.add(emp1);
+        store.add(emp2);
         Report report = new JSONReport(store);
-        String expected = "[{\"name\":\"Ivan\","
-                + "\"hired\":{\"year\":2022,\"month\":5,\"dayOfMonth\":6,\"hourOfDay\":0,\"minute\":0,\"second\":0},"
-                + "\"fired\":{\"year\":2022,\"month\":5,\"dayOfMonth\":6,\"hourOfDay\":0,\"minute\":0,\"second\":0},"
-                + "\"salary\":140.0}]";
-        assertThat(report.generate(em -> true), is(expected));
+        String empJsonTemplate =
+                "{\"name\":\"%s\",\"hired\":\"%s\",\"fired\":\"%s\",\"salary\":%.1f}";
+        StringBuilder expected = new StringBuilder()
+                .append("[")
+                .append(String.format(Locale.US, empJsonTemplate + ",",
+                        emp1.getName(), dateStr, dateStr, emp1.getSalary()))
+                .append(String.format(Locale.US, empJsonTemplate,
+                        emp2.getName(), dateStr, dateStr, emp2.getSalary()))
+                .append("]");
+        assertThat(report.generate(em -> true), is(expected.toString()));
 
     }
 

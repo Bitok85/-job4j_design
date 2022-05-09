@@ -27,9 +27,9 @@ public class XmlReport implements Report {
 
     @Override
     public String generate(Predicate<Employee> filter) {
+        List<Employee> employees = store.findBy(filter);
         String xml = "";
         try (StringWriter writer = new StringWriter()) {
-            List<Employee> employees = store.findBy(filter);
             JAXBContext context = JAXBContext.newInstance(Employees.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
