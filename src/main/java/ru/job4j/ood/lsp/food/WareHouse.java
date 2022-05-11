@@ -8,12 +8,21 @@ public class WareHouse implements FoodDistribution {
     private List<Food> wareHouse = new ArrayList<>();
 
     @Override
-    public void sendFood(Food food) {
-        wareHouse.add(food);
+    public boolean sendFood(Food food) {
+        boolean result = false;
+        if (acceptFood(food)) {
+            result = wareHouse.add(food);
+        }
+        return result;
     }
 
     @Override
     public Food get(int index) {
         return wareHouse.get(index);
+    }
+
+    @Override
+    public boolean acceptFood(Food food) {
+        return expirationDatePercent(food) < LOW_EXPIRATION;
     }
 }
