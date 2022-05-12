@@ -4,19 +4,28 @@ import java.util.List;
 
 public class Parking implements Park {
 
-    List<Integer> parkPlaces;
+    private List<Integer> parkCells;
 
-    public Parking(List<Integer> parkPlaces) {
-        this.parkPlaces = parkPlaces;
+    int passCarCells;
+    int truckCells;
+
+    public Parking(int passCarCells, int truckCells) {
+        this.passCarCells = passCarCells;
+        this.truckCells = truckCells;
+        parkCells = List.of(passCarCells, truckCells);
     }
 
     @Override
-    public void park(Car car) {
-
+    public boolean park(List<Car> cars) {
+        return false;
     }
 
     @Override
     public boolean accept(Car car) {
         return false;
+    }
+
+    public List<Integer> getParkCells() {
+        return parkCells;
     }
 }

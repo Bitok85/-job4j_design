@@ -1,8 +1,10 @@
 package ru.job4j.ood.lsp.parking;
 
+import java.util.List;
+
 public interface Park {
 
-    void park(Car car);
+    boolean park(List<Car> cars);
 
     boolean accept(Car car);
 }
