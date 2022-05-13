@@ -1,22 +1,23 @@
 package ru.job4j.ood.lsp.parking;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Parking implements Park {
 
-    private List<Integer> parkCells;
+    private List<Car> parkCells;
 
-    int passCarCells;
-    int truckCells;
+    private int passCarCells;
+    private int truckCells;
 
     public Parking(int passCarCells, int truckCells) {
         this.passCarCells = passCarCells;
         this.truckCells = truckCells;
-        parkCells = List.of(passCarCells, truckCells);
+        parkCells = new ArrayList<>(passCarCells + truckCells);
     }
 
     @Override
-    public boolean park(List<Car> cars) {
+    public boolean park(Car car) {
         return false;
     }
 
@@ -25,7 +26,7 @@ public class Parking implements Park {
         return false;
     }
 
-    public List<Integer> getParkCells() {
+    public List<Car> getParkCells() {
         return parkCells;
     }
 }

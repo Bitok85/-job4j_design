@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface Park {
 
-    boolean park(List<Car> cars);
+    boolean park(Car car);
 
     boolean accept(Car car);
 }
