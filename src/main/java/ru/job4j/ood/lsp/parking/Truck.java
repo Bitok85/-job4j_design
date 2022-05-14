@@ -9,7 +9,7 @@ public class Truck extends Car {
     }
 
     @Override
-    public int getSize(Car car) {
+    public int getSize() {
         return size;
     }
 
