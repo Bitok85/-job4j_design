@@ -3,6 +3,8 @@ package ru.job4j.ood.lsp.parking;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class Parking implements Park {
 
     private List<Car> parkCells;
@@ -18,15 +20,18 @@ public class Parking implements Park {
 
     @Override
     public boolean park(Car car) {
-        if (!accept(car)) {
-            throw new IllegalArgumentException("Truck must be more then 1 size");
+        boolean result = false;
+        if (car.getSize() == PassengerCar.PASS_CAR_SIZE) {
+            result = passCarPark(car);
+        } else {
+            result = truckPark(car);
         }
-        return car instanceof PassengerCar ? passCarPark(car) : truckPark(car);
+        return result;
     }
 
     @Override
     public boolean accept(Car car) {
-        return !(car instanceof Truck) || car.getSize() > PASS_CAR_SIZE;
+        return car.getSize() >= PassengerCar.PASS_CAR_SIZE;
     }
 
     public List<Car> getParkCells() {

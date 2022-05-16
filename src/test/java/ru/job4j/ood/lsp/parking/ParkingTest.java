@@ -71,8 +71,6 @@ public class ParkingTest {
     @Test(expected = IllegalArgumentException.class)
     public void whenTruckSizeIsOne() {
         Car car = new Truck(1);
-        Parking parking = new Parking(0, 1);
-        parking.park(car);
     }
 
 }
