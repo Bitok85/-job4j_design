@@ -6,5 +6,4 @@ public interface Park {
 
     boolean park(Car car);
 
-    boolean accept(Car car);
 }

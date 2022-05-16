@@ -29,18 +29,13 @@ public class Parking implements Park {
         return result;
     }
 
-    @Override
-    public boolean accept(Car car) {
-        return car.getSize() >= PassengerCar.PASS_CAR_SIZE;
-    }
-
     public List<Car> getParkCells() {
         return new ArrayList<>(parkCells);
     }
 
     private boolean passCarPark(Car car) {
         boolean result = false;
-        if (passCarCells > 0) {
+        if (passCarCells >= PassengerCar.PASS_CAR_SIZE) {
             parkCells.add(car);
             passCarCells--;
             result = true;
@@ -50,7 +45,7 @@ public class Parking implements Park {
 
     private boolean truckPark(Car car) {
         boolean result = false;
-        if (truckCells > 0) {
+        if (truckCells >= PassengerCar.PASS_CAR_SIZE) {
             parkCells.add(car);
             truckCells--;
             result = true;
