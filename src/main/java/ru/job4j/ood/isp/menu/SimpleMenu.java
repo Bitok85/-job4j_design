@@ -10,14 +10,25 @@ public class SimpleMenu implements Menu {
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
         boolean result = false;
         if (findItem(parentName).isPresent()) {
-            System.out.println("Какая-то логика ...");
+            findItem(parentName).get().getMenuItem().getChildren().add(new SimpleMenuItem(childName, actionDelegate));
+            result = true;
+        } else {
+            rootElements.add(new SimpleMenuItem(childName, actionDelegate));
+            result = true;
         }
         return result;
     }
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        return Optional.empty();
+        Optional<MenuItemInfo> result = Optional.empty();
+        if (findItem(itemName).isPresent()) {
+            ItemInfo itemInfo = findItem(itemName).get();
+            MenuItem menuItem = itemInfo.getMenuItem();
+            MenuItemInfo menuItemInfo = new MenuItemInfo(menuItem, itemInfo.getNumber());
+            result = Optional.of(menuItemInfo);
+        }
+        return result;
     }
 
     @Override
@@ -30,7 +41,7 @@ public class SimpleMenu implements Menu {
         Optional<ItemInfo> result = Optional.empty();
         while (iterator.hasNext()) {
             ItemInfo tmp = iterator.next();
-            if (name.equals(tmp.getMenuItem().getName())) {
+            if (tmp.getMenuItem().getName().equals(name)) {
                 result = Optional.of(tmp);
                 break;
             }
@@ -51,17 +62,17 @@ public class SimpleMenu implements Menu {
 
         @Override
         public String getName() {
-            return null;
+            return name;
         }
 
         @Override
         public List<MenuItem> getChildren() {
-            return null;
+            return children;
         }
 
         @Override
         public ActionDelegate getActionDelegate() {
-            return null;
+            return actionDelegate;
         }
     }
 
