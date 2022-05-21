@@ -8,32 +8,46 @@ public class SimpleMenu implements Menu {
 
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
-        boolean result = false;
-        if (findItem(parentName).isPresent()) {
-            findItem(parentName).get().getMenuItem().getChildren().add(new SimpleMenuItem(childName, actionDelegate));
-            result = true;
-        } else {
+        Optional<ItemInfo> parentItem = findItem(parentName);
+        if (findItem(childName).isPresent()) {
+            return false;
+        } else if (Objects.equals(parentName, ROOT)) {
             rootElements.add(new SimpleMenuItem(childName, actionDelegate));
-            result = true;
+            return true;
+        } else if (parentItem.isPresent()) {
+            parentItem.get().getMenuItem().getChildren().add(new SimpleMenuItem(childName, actionDelegate));
+            return true;
         }
-        return result;
+        return false;
     }
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        Optional<MenuItemInfo> result = Optional.empty();
-        if (findItem(itemName).isPresent()) {
-            ItemInfo itemInfo = findItem(itemName).get();
+        return findItem(itemName).map(itemInfo -> {
             MenuItem menuItem = itemInfo.getMenuItem();
-            MenuItemInfo menuItemInfo = new MenuItemInfo(menuItem, itemInfo.getNumber());
-            result = Optional.of(menuItemInfo);
-        }
-        return result;
+            return new MenuItemInfo(menuItem, itemInfo.getNumber());
+        });
     }
 
     @Override
     public Iterator<MenuItemInfo> iterator() {
-        return null;
+        Iterator<ItemInfo> baseIterator = new DFSIterator();
+        return new Iterator<MenuItemInfo>() {
+            @Override
+            public boolean hasNext() {
+                return baseIterator.hasNext();
+            }
+
+            @Override
+            public MenuItemInfo next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                ItemInfo itemInfo = baseIterator.next();
+                MenuItem menuItem = itemInfo.getMenuItem();
+                return new MenuItemInfo(menuItem, itemInfo.getNumber());
+            }
+        };
     }
 
     private Optional<ItemInfo> findItem(String name) {

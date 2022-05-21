@@ -1,10 +1,12 @@
 package ru.job4j.ood.isp.menu;
 
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.contrib.java.lang.system.SystemOutRule;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.StringJoiner;
 
 import static org.junit.Assert.*;
 
@@ -12,7 +14,6 @@ public class SimpleMenuTest {
 
     public static final ActionDelegate STUB_ACTION = System.out::println;
 
-    @Ignore
     @Test
     public void whenAddThenReturnSame() {
         Menu menu = new SimpleMenu();
@@ -40,10 +41,8 @@ public class SimpleMenuTest {
                 menu.select("Покормить собаку").get()
         );
         menu.forEach(i -> System.out.println(i.getNumber() + i.getName()));
-
     }
 
-    @Ignore
     @Test
     public void whenSelect() {
         Menu menu = new SimpleMenu();
@@ -67,6 +66,28 @@ public class SimpleMenuTest {
 
     }
 
+    @Rule
+    public final SystemOutRule systemOutRule = new SystemOutRule().enableLog();
+
+    @Test
+    public void whenPrintMenuOnConsole() {
+        Menu menu = new SimpleMenu();
+        menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
+        menu.add(Menu.ROOT, "Покормить собаку", STUB_ACTION);
+        menu.add("Сходить в магазин", "Купить продукты", STUB_ACTION);
+        menu.add("Купить продукты", "Купить хлеб", STUB_ACTION);
+        menu.add("Купить продукты", "Купить молоко", STUB_ACTION);
+        MenuPrinter printer = new ConsolePrint();
+        printer.print(menu);
+        StringJoiner joiner = new StringJoiner(System.lineSeparator());
+        joiner.add("1.Сходить в магазин");
+        joiner.add("---1.1.Купить продукты");
+        joiner.add("------1.1.1.Купить хлеб");
+        joiner.add("------1.1.2.Купить молоко");
+        joiner.add("2.Покормить собаку");
+        assertEquals(joiner.toString(), systemOutRule.getLog().trim());
+
+    }
 
 
 }
