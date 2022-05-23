@@ -22,6 +22,11 @@ public class WareHouse implements FoodDistribution {
     }
 
     @Override
+    public List<Food> getAll() {
+        return wareHouse;
+    }
+
+    @Override
     public boolean acceptFood(Food food) {
         return expirationDatePercent(food) < LOW_EXPIRATION;
     }

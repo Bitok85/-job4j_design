@@ -25,6 +25,11 @@ public class Shop implements FoodDistribution {
     }
 
     @Override
+    public List<Food> getAll() {
+        return shop;
+    }
+
+    @Override
     public boolean acceptFood(Food food) {
         return expirationDatePercent(food) > LOW_EXPIRATION && expirationDatePercent(food) < EXPIRED;
     }

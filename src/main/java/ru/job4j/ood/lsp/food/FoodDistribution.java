@@ -2,6 +2,7 @@ package ru.job4j.ood.lsp.food;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface FoodDistribution {
 
@@ -20,6 +21,8 @@ public interface FoodDistribution {
     boolean sendFood(Food food);
 
     Food get(int index);
+
+    List<Food> getAll();
 
     boolean acceptFood(Food food);
 

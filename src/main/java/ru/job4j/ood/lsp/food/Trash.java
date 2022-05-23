@@ -22,6 +22,11 @@ public class Trash implements FoodDistribution {
     }
 
     @Override
+    public List<Food> getAll() {
+        return trash;
+    }
+
+    @Override
     public boolean acceptFood(Food food) {
         return expirationDatePercent(food) == EXPIRED;
     }
