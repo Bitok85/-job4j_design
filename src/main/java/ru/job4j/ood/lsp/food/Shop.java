@@ -1,6 +1,7 @@
 package ru.job4j.ood.lsp.food;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Shop implements FoodDistribution {
@@ -26,11 +27,16 @@ public class Shop implements FoodDistribution {
 
     @Override
     public List<Food> getAll() {
-        return shop;
+        return new ArrayList<>(shop);
     }
 
     @Override
     public boolean acceptFood(Food food) {
         return expirationDatePercent(food) > LOW_EXPIRATION && expirationDatePercent(food) < EXPIRED;
+    }
+
+    @Override
+    public void clear() {
+        shop.clear();
     }
 }

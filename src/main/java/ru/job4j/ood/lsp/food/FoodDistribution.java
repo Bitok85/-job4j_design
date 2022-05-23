@@ -26,4 +26,6 @@ public interface FoodDistribution {
 
     boolean acceptFood(Food food);
 
+    void clear();
+
 }
