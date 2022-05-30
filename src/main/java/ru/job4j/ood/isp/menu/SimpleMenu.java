@@ -8,10 +8,11 @@ public class SimpleMenu implements Menu {
 
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
-        Optional<ItemInfo> parentItem = findItem(parentName);
         if (findItem(childName).isPresent()) {
             return false;
-        } else if (Objects.equals(parentName, ROOT)) {
+        }
+        Optional<ItemInfo> parentItem = findItem(parentName);
+        if (Objects.equals(parentName, ROOT)) {
             rootElements.add(new SimpleMenuItem(childName, actionDelegate));
             return true;
         } else if (parentItem.isPresent()) {
